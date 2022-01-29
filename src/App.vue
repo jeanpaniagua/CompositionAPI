@@ -3,11 +3,12 @@
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 // import HelloWorld from './components/HelloWorld.vue';
 import compositionAPI from "./components/compositionAPI.vue";
+import optionsAPI from "./components/optionsAPI.vue";
 </script>
 
 <template>
   <compositionAPI variant="primary">Composition API</compositionAPI>
-  <!-- <button>Hola</button> -->
+  <optionsAPI variant="primary">Options API</optionsAPI>
 </template>
 
 <style>

@@ -61,8 +61,6 @@ export default defineComponent({
       const sizeClass = theme.cssClass.sizes[size.value];
       let variantClass = theme.cssClass.variants[variant.value];
 
-      console.log(variantClass);
-
       if (outline.value) {
         variantClass = theme.cssClass.outlineVariants[variant.value];
       }
@@ -80,6 +78,7 @@ export default defineComponent({
       if (toggle.value) {
         activeState.value = !activeState.value;
         emit("toggle", activeState.value);
+        console.log("toggle", activeState.value);
       }
     };
 
