@@ -2,6 +2,7 @@
   <component
     :is="componentTag"
     :type="componentType"
+    :role="aria.role"
     :class="classes"
     @click="attemptToggle"
   >
@@ -17,15 +18,12 @@ import {
   ref,
   toRefs,
   PropType,
-} from 'vue';
-// import { uiButtonThemeConfigDefaults } from './defaults/ui-button-theme.config'
-// import { uiButtonAriaDefaults } from './defaults/ui-button-aria.config'
-// import { UiButtonThemeConfigModel } from './models/ui-button-theme-config.model'
-// import { UiButtonAriaConfigModel } from './models/ui-button-aria-config.model'
-import { cssClass } from '../assets/theme';
-import { ButtonSizeVariant } from '../assets/size-variants';
+} from "vue";
+import { uiButtonThemeConfigDefaults } from "../assets/theme";
+import { ButtonSizeVariant } from "../assets/size-variant";
+import { uiButtonAriaDefaults } from "../assets/aria";
 
-const TAG_NAME = 'uiButton';
+const TAG_NAME = "uiButton";
 
 export default defineComponent({
   TAG_NAME,
@@ -33,57 +31,55 @@ export default defineComponent({
     anchor: { type: Boolean, default: false },
     toggle: { type: Boolean, default: false },
     outline: { type: Boolean, default: false },
-    // variant: { type: String, required: true },
+    variant: { type: String, required: true },
     size: { type: String as PropType<ButtonSizeVariant>, default: null },
     active: { type: Boolean, default: false },
-    ['aria:role']: { type: String, default: null },
+    ["aria:role"]: { type: String, default: null },
   },
-  emits: ['toggle'],
+  emits: ["toggle"],
   setup(props, { emit, attrs }) {
     const { anchor, toggle, outline, variant, size, active } = toRefs(props);
     const activeState = ref(active.value);
 
-    // const theme = useReactiveThemeConfig<UiButtonThemeConfigModel>(
-    //   TAG_NAME,
-    //   attrs,
-    //   props,
-    //   uiButtonThemeConfigDefaults
-    // );
-    // const ariaConfig = useReactiveAriaConfig<UiButtonAriaConfigModel>(
-    //   TAG_NAME,
-    //   attrs,
-    //   props,
-    //   uiButtonAriaDefaults
-    // );
+    const theme = uiButtonThemeConfigDefaults;
 
-    const componentTag = computed((): 'button' | 'a' => {
-      return anchor.value ? 'a' : 'button';
+    const ariaConfig = uiButtonAriaDefaults;
+
+    const componentTag = computed((): "button" | "a" => {
+      return anchor.value ? "a" : "button";
     });
 
-    const componentType = computed((): 'button' | null => {
-      return anchor.value ? null : 'button';
+    const componentType = computed((): "button" | null => {
+      return anchor.value ? null : "button";
     });
 
-    // const componentRole = computed((): string | null => {
-    //   return anchor.value ? ariaConfig.value.role : null;
-    // });
+    const componentRole = computed((): string | null => {
+      return anchor.value ? ariaConfig.role : null;
+    });
 
     const classes = computed((): string[] => {
-      // const sizeClass = cssClass[size.value]
-      // let variantClass = theme.cssClass.variants[variant.value];
+      const sizeClass = theme.cssClass.sizes[size.value];
+      let variantClass = theme.cssClass.variants[variant.value];
+
+      console.log(variantClass);
+
+      if (outline.value) {
+        variantClass = theme.cssClass.outlineVariants[variant.value];
+      }
 
       return [
-        cssClass.main,
-        // ...(variant.value ? [variantClass] : []),
-        // ...(size.value ? [sizeClass] : []),
-        ...(activeState.value ? [cssClass.active] : []),
+        theme.cssClass.main,
+        ...(variant.value ? [variantClass] : []),
+        ...(size.value ? [sizeClass] : []),
+        ...(outline.value ? [theme.cssClass.outline] : []),
+        ...(activeState.value ? [theme.cssClass.active] : []),
       ];
     });
 
     const attemptToggle = (): void => {
       if (toggle.value) {
         activeState.value = !activeState.value;
-        emit('toggle', activeState.value);
+        emit("toggle", activeState.value);
       }
     };
 
@@ -95,9 +91,9 @@ export default defineComponent({
       activeState,
       componentTag,
       componentType,
-      // componentRole,
+      componentRole,
       classes,
-      // aria: ariaConfig,
+      aria: ariaConfig,
       attemptToggle,
     };
   },
