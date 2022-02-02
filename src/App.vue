@@ -1,14 +1,15 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-// import HelloWorld from './components/HelloWorld.vue';
 import compositionAPI from "./components/compositionAPI.vue";
 import optionsAPI from "./components/optionsAPI.vue";
+import scriptSetup from "./components/scriptSetup.vue";
 </script>
 
 <template>
-  <compositionAPI variant="primary">Composition API</compositionAPI>
-  <optionsAPI variant="primary">Options API</optionsAPI>
+  <compositionAPI variant="primary" toggle>Composition API</compositionAPI>
+  <optionsAPI variant="primary" toggle>Options API</optionsAPI>
+  <script-setup variant="primary" toggle>Script Setup</script-setup>
 </template>
 
 <style>

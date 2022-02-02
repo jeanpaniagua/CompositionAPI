@@ -82,10 +82,6 @@ export default defineComponent({
       }
     };
 
-    watchEffect(() => {
-      activeState.value = active.value;
-    });
-
     return {
       activeState,
       componentTag,

@@ -36,13 +36,13 @@ export default defineComponent({
   },
   computed: {
     componentTag(): "button" | "a" {
-      return this.$props.anchor ? "a" : "button";
+      return this.anchor ? "a" : "button";
     },
     componentType(): "button" | null {
-      return this.$props.anchor ? null : "button";
+      return this.anchor ? null : "button";
     },
     componentRole(): string | null {
-      return this.$props.anchor ? this.ariaConfig.role : null;
+      return this.anchor ? this.ariaConfig.role : null;
     },
     classes(): string[] {
       const sizeClass = this.theme.cssClass.sizes[this.size];
